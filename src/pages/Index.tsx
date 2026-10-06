@@ -138,7 +138,7 @@ export default function Index() {
               Ready to Transform Your Beauty Business?
             </h2>
             <p className="text-primary-foreground/80 mb-8 font-body text-lg">
-              Join thousands of beauty entrepreneurs using Bloom Suite AI
+              Built for beauty entrepreneurs who want to grow smarter.
             </p>
             <Button
               variant="glass"
@@ -157,7 +157,7 @@ export default function Index() {
       <footer className="relative z-10 container mx-auto px-4 py-8 border-t border-border">
         <div className="flex items-center justify-center gap-2 text-muted-foreground">
           <Flower2 className="h-4 w-4" />
-          <span className="text-sm font-body">© 2024 Bloom Suite AI. All rights reserved.</span>
+          <span className="text-sm font-body">© 2026 Bloom Suite AI. All rights reserved.</span>
         </div>
       </footer>
     </div>
