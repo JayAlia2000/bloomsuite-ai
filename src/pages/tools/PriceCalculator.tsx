@@ -282,6 +282,7 @@ Profit Margin: ${desiredProfit}%${results.breakEvenQuantity !== null ? `\nBreak-
                       </p>
                     </Card>
 
+                    {results.breakEvenQuantity !== null && (
                     <Card variant="soft" className="p-6">
                       <div className="flex items-center gap-3 mb-2">
                         <Target className="h-5 w-5 text-primary" />
@@ -292,7 +293,8 @@ Profit Margin: ${desiredProfit}%${results.breakEvenQuantity !== null ? `\nBreak-
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">per month</p>
                     </Card>
-                  )}
+                    )}
+                  </div>
 
                   <Card variant="elevated" className="p-6">
                     <h3 className="font-display font-semibold text-foreground mb-4">
