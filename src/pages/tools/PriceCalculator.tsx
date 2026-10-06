@@ -18,12 +18,13 @@ export default function PriceCalculator() {
   const [productCost, setProductCost] = useState("");
   const [shippingCost, setShippingCost] = useState("");
   const [packagingCost, setPackagingCost] = useState("");
+  const [monthlyFixedCosts, setMonthlyFixedCosts] = useState("");
   const [desiredProfit, setDesiredProfit] = useState("50");
 
   const [results, setResults] = useState<{
     suggestedRetailPrice: number;
     profitPerUnit: number;
-    breakEvenQuantity: number;
+    breakEvenQuantity: number | null;
     totalCost: number;
   } | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -38,9 +39,10 @@ export default function PriceCalculator() {
     const totalCost = product + shipping + packaging;
     const suggestedRetailPrice = totalCost / (1 - profitPercent / 100);
     const profitPerUnit = suggestedRetailPrice - totalCost;
-    // Break-even: assuming $500 monthly fixed costs as baseline for beauty businesses
-    const monthlyFixedCosts = 500;
-    const breakEvenQuantity = profitPerUnit > 0 ? Math.ceil(monthlyFixedCosts / profitPerUnit) : 0;
+    // Break-even: user-provided monthly fixed costs divided by profit per unit
+    const fixedCosts = parseFloat(monthlyFixedCosts) || 0;
+    const breakEvenQuantity =
+      fixedCosts > 0 && profitPerUnit > 0 ? Math.ceil(fixedCosts / profitPerUnit) : null;
 
     const calculationResults = {
       suggestedRetailPrice: Math.round(suggestedRetailPrice * 100) / 100,
@@ -63,6 +65,7 @@ export default function PriceCalculator() {
             productCost,
             shippingCost,
             packagingCost,
+            monthlyFixedCosts,
             desiredProfit,
           } as any,
           output_data: calculationResults as any,
@@ -84,8 +87,7 @@ export default function PriceCalculator() {
 Suggested Retail Price: $${results.suggestedRetailPrice.toFixed(2)}
 Total Cost: $${results.totalCost.toFixed(2)}
 Profit Per Unit: $${results.profitPerUnit.toFixed(2)}
-Profit Margin: ${desiredProfit}%
-Break-even: ${results.breakEvenQuantity} units/month`;
+Profit Margin: ${desiredProfit}%${results.breakEvenQuantity !== null ? `\nBreak-even: ${results.breakEvenQuantity} units/month` : ""}`;
     
     navigator.clipboard.writeText(text);
     toast({
@@ -212,6 +214,20 @@ Break-even: ${results.breakEvenQuantity} units/month`;
                 </div>
 
                 <div className="space-y-2">
+                  <Label htmlFor="monthlyFixedCosts">Monthly Fixed Costs ($)</Label>
+                  <Input
+                    id="monthlyFixedCosts"
+                    type="number"
+                    placeholder="0.00"
+                    value={monthlyFixedCosts}
+                    onChange={(e) => setMonthlyFixedCosts(e.target.value)}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Rent, subscriptions, website fees, etc.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
                   <Label htmlFor="desiredProfit">Desired Profit Percentage (%)</Label>
                   <Input
                     id="desiredProfit"
@@ -266,6 +282,7 @@ Break-even: ${results.breakEvenQuantity} units/month`;
                       </p>
                     </Card>
 
+                    {results.breakEvenQuantity !== null && (
                     <Card variant="soft" className="p-6">
                       <div className="flex items-center gap-3 mb-2">
                         <Target className="h-5 w-5 text-primary" />
@@ -276,6 +293,7 @@ Break-even: ${results.breakEvenQuantity} units/month`;
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">per month</p>
                     </Card>
+                    )}
                   </div>
 
                   <Card variant="elevated" className="p-6">
