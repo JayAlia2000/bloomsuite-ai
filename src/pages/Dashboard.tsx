@@ -62,6 +62,7 @@ export default function Dashboard() {
                   History
                 </Button>
               </Link>
+              <AuthButtons />
             </div>
           </nav>
         </div>
