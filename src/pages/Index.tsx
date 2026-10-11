@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import AuthButtons from "@/components/AuthButtons";
+import { useAuth } from "@/contexts/AuthContext";
 import { Flower2, Sparkles, Calculator, Calendar, ArrowRight } from "lucide-react";
 
 export default function Index() {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const tools = [
     {
@@ -47,9 +50,12 @@ export default function Index() {
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <Button variant="hero" onClick={() => navigate("/dashboard")}>
-              Open Dashboard
-            </Button>
+            {user && (
+              <Button variant="glass" size="sm" onClick={() => navigate("/dashboard")}>
+                Dashboard
+              </Button>
+            )}
+            <AuthButtons />
           </div>
         </nav>
       </header>
@@ -121,8 +127,8 @@ export default function Index() {
                   <p className="text-muted-foreground font-body">
                     {tool.description}
                   </p>
-                  <div className="mt-4 flex items-center text-primary font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span className="text-sm">Get Started</span>
+                  <div className="mt-4 flex items-center text-primary font-medium">
+                    <span className="text-sm">{user ? "Open tool" : "Sign up to use"}</span>
                     <ArrowRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
