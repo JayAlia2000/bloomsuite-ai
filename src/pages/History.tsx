@@ -1,3 +1,4 @@
+import AuthButtons from "@/components/AuthButtons";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -160,6 +161,7 @@ Break-even: ${data.breakEvenQuantity || data.breakEvenUnits} units/month`;
                 Bloom Suite AI
               </span>
             </Link>
+            <AuthButtons />
 
           </nav>
         </div>
