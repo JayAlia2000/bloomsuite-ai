@@ -74,7 +74,7 @@ export default function Dashboard() {
         <div className="max-w-5xl mx-auto">
           <div className="mb-12 animate-fade-in-up">
             <h1 className="text-3xl md:text-4xl font-display font-semibold text-foreground mb-3">
-              Welcome to Bloom Suite AI  let's grow your beauty brand today.🌸
+              Welcome to Bloom Suite AI! Let's grow your beauty brand today.🌸
             </h1>
             <div className="flex flex-wrap gap-3 mt-6">
               <Button variant="hero" onClick={() => navigate("/product-description")}>
